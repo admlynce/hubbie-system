@@ -113,6 +113,7 @@
     <link rel="stylesheet" media="screen" href="{{asset('site/vendor/flatpickr/dist/flatpickr.min.css')}}"/>
     <!-- Main Theme Styles + Bootstrap-->
     <link rel="stylesheet" media="screen" href="{{asset('site/css/theme.min.css')}}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <!-- Body-->
 <body>
@@ -170,7 +171,9 @@
             </div>
         </div>
     </div>
-    <!-- Sign Up Modal-->
+
+
+<!-- Sign Up Modal-->
     <div class="modal fade" id="signup-modal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered p-2 my-0 mx-auto" style="max-width: 950px;">
             <div class="modal-content">
@@ -194,17 +197,27 @@
                                  alt="Illustartion">
                         </div>
                         <div class="col-md-6 px-4 pt-2 pb-4 px-sm-5 pb-sm-5 pt-md-5">
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+
                             <form class="needs-validation" method="POST" action="{{ route('register') }}">
                                 @csrf
                                 <div class="mb-4">
                                     <label class="form-label" for="signup-name">Nome completo</label>
                                     <input class="form-control" type="text" id="signup-name" name="name"
-                                           placeholder="" required :value="old('name')" autofocus autocomplete="name">
+                                           placeholder="" required value="{{ old('name') }}" autofocus autocomplete="name">
                                 </div>
                                 <div class="mb-4">
                                     <label class="form-label" for="signup-email">Email</label>
                                     <input class="form-control" type="email" id="signup-email" name="email"
-                                           placeholder="" :value="old('email')" required>
+                                           placeholder="" value="{{ old('email') }}" required>
                                 </div>
                                 <div class="mb-4">
                                     <label class="form-label" for="signup-password">Senha</label>
