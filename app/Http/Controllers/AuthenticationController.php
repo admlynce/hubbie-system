@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterPostRequest;
-use App\Models\User;
 use App\Services\AuthenticationService;
 use Illuminate\Http\Request;
 
@@ -22,6 +21,13 @@ class AuthenticationController extends Controller
      */
     public function register(RegisterPostRequest $request)
     {
+
         return $this->authenticationService->register($request->all());
     }
+
+    public function login(Request $request)
+    {
+        dd($request->all());
+    }
+
 }
