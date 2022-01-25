@@ -17,7 +17,7 @@ class UserRepository
 
     public function getUserEmail($email)
     {
-        return $this->model->where('email', $email)->firstOrFail();
+        return $this->model->where('email', $email)->first();
     }
 
     public function getAllUsers()

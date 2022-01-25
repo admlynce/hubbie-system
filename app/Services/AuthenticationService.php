@@ -4,6 +4,9 @@ namespace App\Services;
 
 use App\Http\Repositories\UserRepository;
 use Firebase\JWT\JWT;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AuthenticationService
@@ -17,49 +20,64 @@ class AuthenticationService
     {
     }
 
-    public function login($user)
+    /**
+     * @param $login
+     * @return RedirectResponse
+     */
+    public function loginWeb($login): RedirectResponse
     {
-        $data = $this->userRepository->getUserEmail($user['email']);
-        if (!is_null($data)) {
-            return $this->checkPasswordLogin($data, $user['password']);
+        dd($login);
+        if (Auth::attempt($login)) {
+            return redirect()->intended('dashboard');
         }
-        return response()->json(['error' => 'Usuario não encontrado'], 401);
+
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ]);
     }
 
-    protected function checkPasswordLogin($user, $password)
+    public function login($user): JsonResponse
     {
-        if (Hash::check($password, $user->password)) {
+        $data = $this->userRepository->getUserEmail($user['email']);
+
+        if ($this->checkPasswordLogin($data, $user['password'])) {
             return response()->json([
-                'token' => $this->createToken($user)
-            ]);
-        } else {
-            return response()->json([
-                'error' => 'Senha incorreta.'
-            ], 401);
+                'data' => ['token' => $this->createToken($data)]]);
         }
+
+        return response()->json([
+            'message' => 'Senha incorreta',
+            "errors" => [
+                "password" => [
+                    "Password is invalid."
+                ]
+            ]],
+            403);
+    }
+
+    /**
+     * @param $user
+     * @param $password
+     * @return bool
+     */
+    protected function checkPasswordLogin($user, $password): bool
+    {
+        return Hash::check($password, $user->password);
     }
 
     /**
      * Convert data in JWT
-     *
+     * @param $user
      * @return string
      */
-    protected function createToken($data)
+    protected function createToken($user): string
     {
         $payload = [
             'iss' => "hubbie-jwt", // Issuer of the token
-            'data' => $data, // Subject of the token
+            'data' => $user, // Subject of the token
             'iat' => time(), // Time when JWT was issued.
             'exp' => time() + (200 * 24 * 60 * 60)// Expiration time
         ];
         return JWT::encode($payload, env('JWT_SECRET'));
     }
-
-    public function register($data)
-    {
-        $data['password'] = md5($data['password']);
-
-        return response(['user' => $this->repository->store($data), 'message' => 'Usuário cadastrado com sucesso']);
-    }
-
 }
