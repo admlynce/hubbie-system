@@ -16,13 +16,13 @@ class AuthenticationController extends Controller
         $this->authenticationService = $authenticationService;
     }
 
-//    /**
-//     * Login in api.
-//     * @param LoginPostRequest $login
-//     * @return JsonResponse
-//     */
-//    public function login(LoginPostRequest $login): JsonResponse
-//    {
-//        return $this->authenticationService->login($login);
-//    }
+    /**
+     * Login in api.
+     * @param LoginPostRequest $login
+     * @return JsonResponse
+     */
+    public function login(LoginPostRequest $login): JsonResponse
+    {
+        return $this->authenticationService->login($login);
+    }
 }
