@@ -142,6 +142,15 @@
                                                                             data-bs-dismiss="modal">Cadastrar</a></div>
                         </div>
                         <div class="col-md-6 px-4 pt-2 pb-4 px-sm-5 pb-sm-5 pt-md-5">
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
                             <form class="needs-validation" method="POST" action="{{ route('login') }}">
                                 @csrf
                                 <div class="mb-4">
@@ -223,7 +232,7 @@
                                     <label class="form-label" for="signup-password">Senha</label>
                                     <div class="password-toggle">
                                         <input class="form-control" type="password" id="signup-password" minlength="8"
-                                               name="password" required autocomplete="new-password">
+                                               name="password" required autocomplete="password">
                                         <label class="password-toggle-btn" aria-label="Show/hide password">
                                             <input class="password-toggle-check" type="checkbox"><span
                                                 class="password-toggle-indicator"></span>
@@ -235,7 +244,7 @@
                                     <div class="password-toggle">
                                         <input class="form-control" type="password" id="password_confirmation"
                                                name="password_confirmation"
-                                               minlength="8" required autocomplete="new-password">
+                                               minlength="8" required autocomplete="password_confirmation">
                                         <label class="password-toggle-btn" aria-label="Show/hide password">
                                             <input class="password-toggle-check" type="checkbox"><span
                                                 class="password-toggle-indicator"></span>
@@ -243,8 +252,8 @@
                                     </div>
                                 </div>
                                 <div class="mb-4">
-                                    <label class="form-label" for="type-user">Tipo cadastro</label>
-                                    <select class="form-select" id="type-user" name="type-user" required>
+                                    <label class="form-label" for="type_user">Tipo cadastro</label>
+                                    <select class="form-select" id="type_user" name="type_user" required>
                                         <option value="cliente">Sou cliente</option>
                                         <option value="profissional">Sou guia/motorista</option>
                                         <option value="empresa">Sou empresa</option>

@@ -24,4 +24,9 @@ class UserRepository
     {
       return $this->model->all();
     }
+
+    public function createAccount($data)
+    {
+        return $this->model->create($data);
+    }
 }

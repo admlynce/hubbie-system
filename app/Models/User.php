@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
@@ -27,6 +28,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'referred_by',
+        'affiliate_id',
+        'type_user',
     ];
 
     /**
@@ -39,6 +43,7 @@ class User extends Authenticatable
         'remember_token',
         'two_factor_recovery_codes',
         'two_factor_secret',
+        'company'
     ];
 
     /**
@@ -58,4 +63,25 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    /**
+     * A user has a referrer.
+     *
+     * @return BelongsTo
+     */
+    public function referrer()
+    {
+        return $this->belongsTo(User::class, 'referred_by', 'affiliate_id');
+    }
+
+    /**
+     * A user has many referrals.
+     *
+     * @return HasMany
+     */
+    public function referrals()
+    {
+        return $this->hasMany(User::class, 'referred_by', 'affiliate_id');
+    }
+
 }

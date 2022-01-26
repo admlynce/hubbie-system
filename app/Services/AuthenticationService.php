@@ -4,10 +4,14 @@ namespace App\Services;
 
 use App\Http\Repositories\UserRepository;
 use Firebase\JWT\JWT;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+
 
 class AuthenticationService
 {
@@ -22,18 +26,35 @@ class AuthenticationService
 
     /**
      * @param $login
-     * @return RedirectResponse
+     * @return Application|Factory|View|RedirectResponse
      */
-    public function loginWeb($login): RedirectResponse
+    public function loginWeb($login)
     {
-        dd($login);
         if (Auth::attempt($login)) {
             return redirect()->intended('dashboard');
         }
-
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
+            'email' => 'As credenciais fornecidas não correspondem aos nossos registros.',
         ]);
+    }
+
+    public function registerWeb($register)
+    {
+        $register['referrer_id'] = $this->getSessionReferrer();
+        $register['affiliate_id'] = $this->createAffiliateId();
+        $register['password'] = $this->makeHashPassord($register['password']);
+
+        $user = $this->userRepository->createAccount($register);
+        if (!$user) {
+            return view('public/home');
+        }
+
+        Auth::loginUsingId($user->id);
+        if ($user->type_user !== 'empresa') {
+            return redirect()->intended('dashboard');
+        }
+
+        return view('public/home');
     }
 
     public function login($user): JsonResponse
@@ -46,8 +67,11 @@ class AuthenticationService
         }
 
         return response()->json([
-            'message' => 'Senha incorreta',
+            'message' => 'As credenciais fornecidas não correspondem aos nossos registros.',
             "errors" => [
+                "email" => [
+                    "Email is invalid."
+                ],
                 "password" => [
                     "Password is invalid."
                 ]
@@ -55,12 +79,36 @@ class AuthenticationService
             403);
     }
 
+    private function getSessionReferrer()
+    {
+        if (session()->get('referrer_id')) {
+            return session()->get('referrer_id');
+        }
+        return null;
+    }
+
+    private function createAffiliateId()
+    {
+        return mb_strtoupper(uniqid("AI"));
+    }
+
+    private function makeHashPassord($password): string
+    {
+        return Hash::make($password);
+    }
+
+    public function setSessionReferrer($referrer_id)
+    {
+        session(['referrer_id' => $referrer_id]);
+    }
+
+
     /**
      * @param $user
      * @param $password
      * @return bool
      */
-    protected function checkPasswordLogin($user, $password): bool
+    private function checkPasswordLogin($user, $password): bool
     {
         return Hash::check($password, $user->password);
     }
@@ -70,7 +118,7 @@ class AuthenticationService
      * @param $user
      * @return string
      */
-    protected function createToken($user): string
+    private function createToken($user): string
     {
         $payload = [
             'iss' => "hubbie-jwt", // Issuer of the token

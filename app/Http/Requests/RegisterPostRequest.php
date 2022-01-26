@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class RegisterPostRequest extends FormRequest
 {
@@ -27,8 +28,12 @@ class RegisterPostRequest extends FormRequest
             'name' => 'required|max:60|min:5',
             'email' => 'required|email:rfc,dns',
             'password' => 'required|min:8',
-            'password_confirmation' => 'required|confirmed',
-            'type-user' => 'required'
+//            'password_confirmation' => 'required|confirmed',
+            'referral_code' => '',
+            'type_user' => [
+                'required',
+                Rule::in(['cliente', 'profissional', 'empresa']),
+            ],
         ];
     }
 }

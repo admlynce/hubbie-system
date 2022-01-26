@@ -15,12 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('public/home');
-});
+Route::get('/', [AuthenticationController::class, 'home'])->name('home');
+
 
 Route::resource('users', UserController::class);
 Route::post('register', [AuthenticationController::class, 'register'])->name('register');
+Route::post('login', [AuthenticationController::class, 'login'])->name('login');
+
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
