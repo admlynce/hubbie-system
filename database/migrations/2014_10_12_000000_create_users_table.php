@@ -22,7 +22,17 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
+            $table->string('type_user');
+            $table->string('affiliate_id')->nullable()->unique();
+            $table->string('referred_by')->nullable();
+            $table->string('company')->nullable();
             $table->timestamps();
+
+            $table->softDeletes();
+        });
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreign('referred_by')->references('affiliate_id')->on('users');
         });
     }
 
