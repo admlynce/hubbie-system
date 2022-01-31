@@ -53,10 +53,10 @@
         <li class=" nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="file-text"></i><span
                     class="menu-title text-truncate" data-i18n="Empresa">Empresa</span></a>
             <ul class="menu-content">
-                <li><a class="d-flex align-items-center" href="{{route('company.index')}}"><i
+                <li><a class="d-flex align-items-center" href="{{route('company.create')}}"><i
                             data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Cadastrar">Cadastrar</span></a>
                 </li>
-                <li><a class="d-flex align-items-center" href="{{route('company.create')}}"><i
+                <li><a class="d-flex align-items-center" href="{{route('company.index')}}"><i
                             data-feather="circle"></i><span class="menu-item text-truncate"
                                                             data-i18n="Listar">Listar</span></a>
                 </li>
