@@ -167,6 +167,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Yajra\DataTables\DataTablesServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -189,11 +190,11 @@ return [
     | This array of class aliases will be registered when this application
     | is started. However, feel free to register as many as you wish as
     | the aliases are "lazy" loaded so they don't hinder performance.
-    |
+    |php artisan vendor:publish --provider="Yajra\DataTables\DataTablesServiceProvider"
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // ...
+        'DataTables' => Yajra\DataTables\Facades\DataTables::class,
     ])->toArray(),
 
 ];

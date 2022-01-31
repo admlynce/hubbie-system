@@ -101,9 +101,10 @@
             window.onload = function () {
                 var preloader = document.querySelector('.page-loading');
                 preloader.classList.remove('active');
+                preloader.remove();
                 setTimeout(function () {
                     preloader.remove();
-                }, 2000);
+                }, 500);
             };
         })();
     </script>
@@ -118,12 +119,12 @@
 <!-- Body-->
 <body>
 <!-- Page loading spinner-->
-<div class="page-loading active">
-    <div class="page-loading-inner">
-        <div class="page-spinner"></div>
-        <span>Loading...</span>
-    </div>
-</div>
+{{--<div class="page-loading active">--}}
+{{--    <div class="page-loading-inner">--}}
+{{--        <div class="page-spinner"></div>--}}
+{{--        <span>Loading...</span>--}}
+{{--    </div>--}}
+{{--</div>--}}
 <main class="page-wrapper">
     <!-- Sign In Modal-->
     <div class="modal fade" id="signin-modal" tabindex="-1" aria-hidden="true">

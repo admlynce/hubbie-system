@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthenticationController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\CompanyController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,13 +16,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [AuthenticationController::class, 'home'])->name('home');
-
-
-Route::resource('users', UserController::class);
-Route::post('register', [AuthenticationController::class, 'register'])->name('register');
-Route::post('login', [AuthenticationController::class, 'login'])->name('login');
+Route::post('register', [AuthenticationController::class, 'register']);
+Route::post('login', [AuthenticationController::class, 'login']);
 
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
+    return view('admin.includes.dashboard');
 })->name('dashboard');
+
+Route::view('/admin/dashboard', 'admin.includes.dashboard.');
+
+Route::resource('company', CompanyController::class);
