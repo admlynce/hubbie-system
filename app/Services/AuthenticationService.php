@@ -40,7 +40,7 @@ class AuthenticationService
 
     public function registerWeb($register)
     {
-        $register['referrer_id'] = $this->getSessionReferrer();
+        $register['referred_by'] = $this->getSessionReferrer();
         $register['affiliate_id'] = $this->createAffiliateId();
         $register['password'] = $this->makeHashPassord($register['password']);
 

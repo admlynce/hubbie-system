@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LoginPostRequest;
 use App\Http\Requests\RegisterPostRequest;
 use App\Services\AuthenticationService;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class AuthenticationController extends Controller
 {
@@ -31,7 +33,7 @@ class AuthenticationController extends Controller
     /**
      * Register a new user
      *
-     * @return Response
+     * @return Application|Factory|View|RedirectResponse
      */
     public function register(RegisterPostRequest $request)
     {
