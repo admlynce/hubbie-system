@@ -139,6 +139,8 @@
 <div class="sidenav-overlay"></div>
 <div class="drag-target"></div>
 
+@include('admin.includes.modal')
+
 <!-- BEGIN: Footer-->
 @include('admin.includes.footer')
 <!-- END: Footer-->

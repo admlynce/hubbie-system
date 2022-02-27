@@ -34,6 +34,7 @@
 <!-- END: Theme JS-->
 
 <!-- BEGIN: Page JS-->
+
 <script src="{{asset('/private/app-assets/js/scripts/pages/dashboard-ecommerce.js')}}"></script>
 <!-- END: Page JS-->
 
@@ -41,6 +42,11 @@
 <script src="{{asset('/private/app-assets/js/scripts/pages/app-invoice-list.js')}}"></script>
 <!-- END: Page JS-->
 
+<!-- BEGIN: Page JS-->
+<script src="{{asset('/private/app-assets/js/scripts/extensions/ext-component-clipboard.js')}}"></script>
+<!-- END: Page JS-->
+
+<script src="{{asset('/private/app-assets/js/scripts/components/components-modals.js')}}"></script>
 <script>
     $(window).on('load', function () {
         if (feather) {

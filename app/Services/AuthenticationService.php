@@ -79,6 +79,7 @@ class AuthenticationService
             403);
     }
 
+
     private function getSessionReferrer()
     {
         if (session()->get('referrer_id')) {

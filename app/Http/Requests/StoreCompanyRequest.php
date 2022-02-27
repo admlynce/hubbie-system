@@ -24,7 +24,10 @@ class StoreCompanyRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required'
+            'name' => 'required',
+            'name_franchises' => 'required',
+            'code_company' => 'required',
+            'description' => 'required'
         ];
     }
 }

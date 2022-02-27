@@ -25,9 +25,9 @@ class CompanyController extends Controller
             $data = Company::select('*');
             return Datatables::of($data)
                 ->addIndexColumn()
-                ->addColumn('action', function($row){
+                ->addColumn('action', function ($row) {
 
-                    $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
+                    $btn = '<a href="' . url('company') . '/' . $row->id . '" class="edit btn btn-primary btn-sm" target="_blank"> <i class="fas fa-search-plus"></i> Detalhes</a>';
 
                     return $btn;
                 })
@@ -56,7 +56,8 @@ class CompanyController extends Controller
      */
     public function store(StoreCompanyRequest $request)
     {
-        //
+        Company::create($request->validated());
+        return to_route('company.index');
     }
 
     /**
@@ -67,7 +68,7 @@ class CompanyController extends Controller
      */
     public function show(Company $company)
     {
-        //
+        return view('admin.company.edit',compact('company'));
     }
 
     /**
