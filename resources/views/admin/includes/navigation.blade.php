@@ -281,8 +281,8 @@
                         class="avatar-status-online"></span></span>
             </a>
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-user">
-                <a class="dropdown-item" href="page-profile.html"><i class="me-50" data-feather="user"></i> Perfil</a>
-                <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#referral">
+                <a class="dropdown-item" href="{{route('profile')}}"><i class="me-50" data-feather="user"></i> Perfil</a>
+                <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#referral" style="width: 100%;">
                     <i class="me-50" data-feather="link"></i>Convidar
                 </button>
                 <a class="dropdown-item" href="app-email.html"><i class="me-50" data-feather="mail"></i> Inbox</a>

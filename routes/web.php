@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,6 +31,8 @@ Route::view('/admin/dashboard', 'admin.includes.dashboard.');
 
 Route::resource('company', CompanyController::class);
 
-Route::controller(UserController::class)->group(function () {
-    Route::resource('users', UserController::class);
+Route::controller(ProfileController::class)->group(function () {
+    Route::get('profile', 'profile')->name('profile');
+    Route::post('profile/password', 'profilePassword')->name('profilePassword');
 });
+Route::resource('users', UserController::class);

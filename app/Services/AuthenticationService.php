@@ -93,7 +93,7 @@ class AuthenticationService
         return mb_strtoupper(uniqid("AI"));
     }
 
-    private function makeHashPassord($password): string
+    public function makeHashPassord($password): string
     {
         return Hash::make($password);
     }

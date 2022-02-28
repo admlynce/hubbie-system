@@ -46,6 +46,13 @@
 <script src="{{asset('/private/app-assets/js/scripts/extensions/ext-component-clipboard.js')}}"></script>
 <!-- END: Page JS-->
 
+<!-- BEGIN: Page Vendor JS-->
+<script src="{{asset('/private/app-assets/vendors/js/forms/wizard/bs-stepper.min.js')}}"></script>
+<script src="{{asset('/private/app-assets/vendors/js/forms/select/select2.full.min.js')}}"></script>
+<script src="{{asset('/private/app-assets/vendors/js/forms/validation/jquery.validate.min.js')}}"></script>
+<script src="{{asset('/private/app-assets/js/scripts/forms/form-wizard.js')}}"></script>
+<!-- END: Page Vendor JS-->
+
 <script src="{{asset('/private/app-assets/js/scripts/components/components-modals.js')}}"></script>
 <script>
     $(window).on('load', function () {
